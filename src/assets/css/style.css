@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Germania+One&family=Merriweather&family=Pacifico&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:root {
+  --pry-font-family: "Merriweather", serif;
+  --heading-font-family: "Germania One", cursive;
+  --logo-font-family: "Pacifico", cursive;
+}
+
+a{
+  text-decoration: none;
+}
