@@ -1,11 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import RouteApp from "./routes/routes";
+import Loading from "./components/loading";
 
 function App() {
-  return (
-    <div className="App">
-    </div>
-  );
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 4000);
+  return <>{loading ? <Loading /> : <RouteApp />}</>;
 }
 
 export default App;
