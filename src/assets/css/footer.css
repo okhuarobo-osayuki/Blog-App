@@ -1,0 +1,10 @@
+.footer{
+    background-color: rgb(232, 235, 238);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-family: var(--pry-font-family);
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
