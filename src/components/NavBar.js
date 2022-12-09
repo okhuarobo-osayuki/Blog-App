@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import "../assets/css/navbar.css";
+import { SearchReducer, SubMenuReducer } from "../hooks/reducer";
 
 // A custom link component that styles itself as active if the pathname of the URL matches the active link
-export function CustomLink({ to, children, ...props }) {
+export function CustomLink({ to, onMouseOver, className, children, ...props }) {
   const resolvedPath = useResolvedPath(to);
   const isActive = useMatch({ path: resolvedPath.pathname });
 
   return (
     <li className={isActive ? "active" : "nav-items"}>
-      <Link to={to} {...props}>
+      <Link to={to} onMouseOver={onMouseOver} className={className} {...props}>
         {children}
       </Link>
     </li>
@@ -19,42 +19,139 @@ export function CustomLink({ to, children, ...props }) {
 // The navigation component that contains the logo, the links to the different pages and the search functionality
 function NavBar() {
   // An onclick function that is called when the search button is clicked and returns the search query; and also returns to normal state when the search button is clicked again
-  const [search, setSearch] = useState();
-  
-  // An onclick function that closes the search bar when the close button is clicked
+  const [searchState, dispatch] = SearchReducer();
+
   const searchClose = () => {
-    setSearch();
+    dispatch({ type: "SEARCH_CLOSE" });
   };
 
-// An onclick function that opens the search bar when the search button is clicked
   const searchClick = (e) => {
     e.preventDefault();
-    setSearch((prev) => {
-      return (
-        <form className="search-form" method="GET" >
-          <input type="search" placeholder="Search for..." className="header-search-input" />
+    dispatch({
+      type: "SEARCH_OPEN",
+      payload: (
+        <form className="search-form" method="GET">
+          <input
+            type="search"
+            placeholder="Search for..."
+            className="header-search-input"
+          />
           {/* close search button */}
-          <button className="search-close" onClick={searchClose}>close</button>
+          <button className="search-close" onClick={searchClose}>
+            close
+          </button>
         </form>
-      );
+      ),
     });
+  };
+
+  // An on click event that displays the sub-menu when the mouse hovers over the menu item and hides the sub-menu when the mouse leaves the menu item
+  // const [subMenu, setSubMenu] = useState();
+  const [menuState, dispatchMenu] = SubMenuReducer()
+
+  const subMenuOpen = (e) => {
+    e.preventDefault();
+    //An if statement to show sub-menu for two different menu items
+    if (e.target.textContent === "Category") {
+      if (menuState.subMenu === "") {
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu">
+              <ul className="sub-menu-items">
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 1</Link>
+                </li>
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
+      } else if (menuState.subMenu !== "") {
+        dispatchMenu({type: "SUBMENU_CLOSE"});
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu">
+              <ul className="sub-menu-items">
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 1</Link>
+                </li>
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
+      }
+    } else if (e.target.textContent === "Blog") {
+      if (menuState.subMenu !== "") {
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu-2">
+              <ul className="sub-menu-items-2">
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 1</Link>
+                </li>
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
+      } else if (menuState.subMenu === "") {
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu-2">
+              <ul className="sub-menu-items-2">
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 1</Link>
+                </li>
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
+      }
+    }
+  };
+
+  const closeSubMenu = (e) => {
+    if (
+      e.target.textContent !== "Category" ||
+      e.target.textContent !== "Blog"
+    ) {
+      dispatchMenu({type: "SUBMENU_CLOSE"});
+    }
   };
 
   return (
     <nav className="nav-bar">
-      <h1>
+      <h1 onMouseOver={closeSubMenu}>
         <Link to="/">Blog</Link>
       </h1>
-      <ul>
-        <CustomLink to="/">Home</CustomLink>
-        <CustomLink to="/pages/">Category</CustomLink>
-        <CustomLink to="/pages/">Blog</CustomLink>
-        <CustomLink to="/pages/about">About</CustomLink>
-        <CustomLink to="/pages/">Contact</CustomLink>
+      <ul className="nav-item-list">
+        <CustomLink to="/" className="nav-item" onMouseOver={closeSubMenu}>Home</CustomLink>
+        <CustomLink to="/pages/" className="has-children nav-item" onMouseOver={subMenuOpen}>Category</CustomLink>
+        {menuState.subMenu}
+        <CustomLink to="/pages/" className="has-children nav-item" onMouseOver={subMenuOpen}>Blog</CustomLink>
+        <CustomLink to="/pages/about" className="nav-item" onMouseOver={closeSubMenu}>About</CustomLink>
+        <CustomLink to="/pages/" className="nav-item" onMouseOver={closeSubMenu}>Contact</CustomLink>
       </ul>
-      {/* Search value placed above the search icon */}
-        <>{search}</>
-      <div className="nav-search" onClick={searchClick}>
+
+      <>{searchState.search}</>
+      {/* Search input placed above the search icon */}
+
+      <div className="nav-search" onClick={searchClick} onMouseOver={closeSubMenu}
+      >
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path
             stroke="currentColor"
