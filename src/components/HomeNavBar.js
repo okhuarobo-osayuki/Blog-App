@@ -122,7 +122,7 @@ function HomeNavBar() {
 
   return (
     <nav className="nav-bar">
-      <h1 className="logo">
+      <h1 className="logo" onMouseOver={closeSubMenu}>
         <Link to="/">Blog</Link>
       </h1>
       <ul className="nav-list">
@@ -136,7 +136,7 @@ function HomeNavBar() {
       <>{searchState.search}</>
       {/* Search input placed above the search icon */}
 
-      <div className="nav-search" onClick={searchClick}>
+      <div className="nav-search" onClick={searchClick} onMouseOver={closeSubMenu}>
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path
             stroke="currentColor"
