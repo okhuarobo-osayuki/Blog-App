@@ -1,10 +1,77 @@
-.footer{
-    background-color: rgb(232, 235, 238);
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    font-size: 12px;
-    font-family: var(--pry-font-family);
-    letter-spacing: 1px;
-    margin-top: 20px;
+.footer {
+  background-color: rgb(232, 235, 238);
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 12px;
+  font-family: var(--pry-font-family);
+  letter-spacing: 1px;
+  margin-top: 20px;
+}
+
+/* Newsletter */
+.newsletter{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-items: space-around;
+}
+
+.newsletter-header, .newsletter-para{
+  color: #000;
+}
+
+.newsletter-header {
+  font-size: 2.5rem;
+  font-family: var(--heading-font-family);
+}
+
+.newsletter-para {
+  font-size: 1rem;
+  font-family: var(--pry-font-family);
+}
+
+form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+input{
+  width: 25%;
+}
+
+input, button{
+  padding: 1rem;
+  border: 0.5px solid grey;
+  border-radius: 3px;
+  margin: 10px 0;
+  outline: none;
+}
+
+input::-webkit-input-placeholder{
+  color: gray;
+  font-family: var(--pry-font-family);
+}
+
+input:focus{
+  border: 1px solid #000;
+}
+
+button{
+  background-color: #000;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 15%;
+}
+
+button:hover{
+  background-color: rgb(4,118,111);
+  color: #000;
+  border: 0.5px solid grey;
 }
