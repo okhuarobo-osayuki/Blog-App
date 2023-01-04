@@ -37,9 +37,7 @@ function NavBar() {
             className="header-search-input"
           />
           {/* close search button */}
-          <button className="search-close" onClick={searchClose}>
-            close
-          </button>
+          <button className="search-close" onClick={searchClose}></button>
         </form>
       ),
     });
@@ -47,7 +45,7 @@ function NavBar() {
 
   // An on click event that displays the sub-menu when the mouse hovers over the menu item and hides the sub-menu when the mouse leaves the menu item
   // const [subMenu, setSubMenu] = useState();
-  const [menuState, dispatchMenu] = SubMenuReducer()
+  const [menuState, dispatchMenu] = SubMenuReducer();
 
   const subMenuOpen = (e) => {
     e.preventDefault();
@@ -70,7 +68,7 @@ function NavBar() {
           ),
         });
       } else if (menuState.subMenu !== "") {
-        dispatchMenu({type: "SUBMENU_CLOSE"});
+        dispatchMenu({ type: "SUBMENU_CLOSE" });
         dispatchMenu({
           type: "SUBMENU_OPEN",
           payload: (
@@ -129,7 +127,7 @@ function NavBar() {
       e.target.textContent !== "Category" ||
       e.target.textContent !== "Blog"
     ) {
-      dispatchMenu({type: "SUBMENU_CLOSE"});
+      dispatchMenu({ type: "SUBMENU_CLOSE" });
     }
   };
 
@@ -139,18 +137,47 @@ function NavBar() {
         <Link to="/">Blog</Link>
       </h1>
       <ul className="nav-item-list">
-        <CustomLink to="/" className="nav-item" onMouseOver={closeSubMenu}>Home</CustomLink>
-        <CustomLink to="/pages/" className="has-children nav-item" onMouseOver={subMenuOpen}>Category</CustomLink>
+        <CustomLink to="/" className="nav-item" onMouseOver={closeSubMenu}>
+          Home
+        </CustomLink>
+        <CustomLink
+          to="/pages/"
+          className="has-children nav-item"
+          onMouseOver={subMenuOpen}
+        >
+          Category
+        </CustomLink>
         {menuState.subMenu}
-        <CustomLink to="/pages/" className="has-children nav-item" onMouseOver={subMenuOpen}>Blog</CustomLink>
-        <CustomLink to="/pages/about" className="nav-item" onMouseOver={closeSubMenu}>About</CustomLink>
-        <CustomLink to="/pages/" className="nav-item" onMouseOver={closeSubMenu}>Contact</CustomLink>
+        <CustomLink
+          to="/pages/"
+          className="has-children nav-item"
+          onMouseOver={subMenuOpen}
+        >
+          Blog
+        </CustomLink>
+        <CustomLink
+          to="/pages/about"
+          className="nav-item"
+          onMouseOver={closeSubMenu}
+        >
+          About
+        </CustomLink>
+        <CustomLink
+          to="/pages/"
+          className="nav-item"
+          onMouseOver={closeSubMenu}
+        >
+          Contact
+        </CustomLink>
       </ul>
 
       <>{searchState.search}</>
       {/* Search input placed above the search icon */}
 
-      <div className="nav-search" onClick={searchClick} onMouseOver={closeSubMenu}
+      <div
+        className="nav-search"
+        onClick={searchClick}
+        onMouseOver={closeSubMenu}
       >
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path

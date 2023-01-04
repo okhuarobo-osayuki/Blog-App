@@ -25,100 +25,98 @@ function HomeNavBar() {
             className="header-search-input"
           />
           {/* close search button */}
-          <button className="search-close" onClick={searchClose}>
-            close
-          </button>
+          <button className="search-close" onClick={searchClose}></button>
         </form>
       ),
     });
   };
 
-    // An on click event that displays the sub-menu when the mouse hovers over the menu item and hides the sub-menu when the mouse leaves the menu item
-    const [menuState, dispatchMenu] = SubMenuReducer()
+  // An on click event that displays the sub-menu when the mouse hovers over the menu item and hides the sub-menu when the mouse leaves the menu item
+  const [menuState, dispatchMenu] = SubMenuReducer();
 
-    const subMenuOpen = (e) => {
-      e.preventDefault();
-      //An if statement to show sub-menu for two different menu items
-      if (e.target.textContent === "Category") {
-        if (menuState.subMenu === "") {
-          dispatchMenu({
-            type: "SUBMENU_OPEN",
-            payload: (
-              <div className="sub-menu">
-                <ul className="sub-menu-items">
-                  <li className="sub-menu-item">
-                    <Link to="/pages/category/">Category 1</Link>
-                  </li>
-                  <li className="sub-menu-item">
-                    <Link to="/pages/category/">Category 2</Link>
-                  </li>
-                </ul>
-              </div>
-            ),
-          });
-        } else if (menuState.subMenu !== "") {
-          dispatchMenu({type: "SUBMENU_CLOSE"});
-          dispatchMenu({
-            type: "SUBMENU_OPEN",
-            payload: (
-              <div className="sub-menu">
-                <ul className="sub-menu-items">
-                  <li className="sub-menu-item">
-                    <Link to="/pages/category/">Category 1</Link>
-                  </li>
-                  <li className="sub-menu-item">
-                    <Link to="/pages/category/">Category 2</Link>
-                  </li>
-                </ul>
-              </div>
-            ),
-          });
-        }
-      } else if (e.target.textContent === "Blog") {
-        if (menuState.subMenu !== "") {
-          dispatchMenu({
-            type: "SUBMENU_OPEN",
-            payload: (
-              <div className="sub-menu-2">
-                <ul className="sub-menu-items-2">
-                  <li className="sub-menu-item-2">
-                    <Link to="/pages/blog/">Blog 1</Link>
-                  </li>
-                  <li className="sub-menu-item-2">
-                    <Link to="/pages/blog/">Blog 2</Link>
-                  </li>
-                </ul>
-              </div>
-            ),
-          });
-        } else if (menuState.subMenu === "") {
-          dispatchMenu({
-            type: "SUBMENU_OPEN",
-            payload: (
-              <div className="sub-menu-2">
-                <ul className="sub-menu-items-2">
-                  <li className="sub-menu-item-2">
-                    <Link to="/pages/blog/">Blog 1</Link>
-                  </li>
-                  <li className="sub-menu-item-2">
-                    <Link to="/pages/blog/">Blog 2</Link>
-                  </li>
-                </ul>
-              </div>
-            ),
-          });
-        }
+  const subMenuOpen = (e) => {
+    e.preventDefault();
+    //An if statement to show sub-menu for two different menu items
+    if (e.target.textContent === "Category") {
+      if (menuState.subMenu === "") {
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu">
+              <ul className="sub-menu-items">
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 1</Link>
+                </li>
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
+      } else if (menuState.subMenu !== "") {
+        dispatchMenu({ type: "SUBMENU_CLOSE" });
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu">
+              <ul className="sub-menu-items">
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 1</Link>
+                </li>
+                <li className="sub-menu-item">
+                  <Link to="/pages/category/">Category 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
       }
-    };
-  
-    const closeSubMenu = (e) => {
-      if (
-        e.target.textContent !== "Category" ||
-        e.target.textContent !== "Blog"
-      ) {
-        dispatchMenu({type: "SUBMENU_CLOSE"});
+    } else if (e.target.textContent === "Blog") {
+      if (menuState.subMenu !== "") {
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu-2">
+              <ul className="sub-menu-items-2">
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 1</Link>
+                </li>
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
+      } else if (menuState.subMenu === "") {
+        dispatchMenu({
+          type: "SUBMENU_OPEN",
+          payload: (
+            <div className="sub-menu-2">
+              <ul className="sub-menu-items-2">
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 1</Link>
+                </li>
+                <li className="sub-menu-item-2">
+                  <Link to="/pages/blog/">Blog 2</Link>
+                </li>
+              </ul>
+            </div>
+          ),
+        });
       }
-    };
+    }
+  };
+
+  const closeSubMenu = (e) => {
+    if (
+      e.target.textContent !== "Category" ||
+      e.target.textContent !== "Blog"
+    ) {
+      dispatchMenu({ type: "SUBMENU_CLOSE" });
+    }
+  };
 
   return (
     <nav className="nav-bar">
@@ -126,17 +124,48 @@ function HomeNavBar() {
         <Link to="/">Blog</Link>
       </h1>
       <ul className="nav-list">
-        <CustomLink to="/" className="nav-item" onMouseOver={closeSubMenu}>Home</CustomLink>
-        <CustomLink to="/pages/" className="has-children nav-item" onMouseOver={subMenuOpen}>Category</CustomLink>{menuState.subMenu}
-        <CustomLink to="/pages/" className="has-children nav-item" onMouseOver={subMenuOpen}>Blog</CustomLink>
-        <CustomLink to="/pages/about" className="nav-item" onMouseOver={closeSubMenu}>About</CustomLink>
-        <CustomLink to="/pages/" className="nav-item" onMouseOver={closeSubMenu}>Contact</CustomLink>
+        <CustomLink to="/" className="nav-item" onMouseOver={closeSubMenu}>
+          Home
+        </CustomLink>
+        <CustomLink
+          to="/pages/"
+          className="has-children nav-item"
+          onMouseOver={subMenuOpen}
+        >
+          Category
+        </CustomLink>
+        {menuState.subMenu}
+        <CustomLink
+          to="/pages/"
+          className="has-children nav-item"
+          onMouseOver={subMenuOpen}
+        >
+          Blog
+        </CustomLink>
+        <CustomLink
+          to="/pages/about"
+          className="nav-item"
+          onMouseOver={closeSubMenu}
+        >
+          About
+        </CustomLink>
+        <CustomLink
+          to="/pages/"
+          className="nav-item"
+          onMouseOver={closeSubMenu}
+        >
+          Contact
+        </CustomLink>
       </ul>
 
       <>{searchState.search}</>
       {/* Search input placed above the search icon */}
 
-      <div className="nav-search" onClick={searchClick} onMouseOver={closeSubMenu}>
+      <div
+        className="nav-search"
+        onClick={searchClick}
+        onMouseOver={closeSubMenu}
+      >
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path
             stroke="currentColor"
